@@ -12,11 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="120pt"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="5pt"
-        android:layout_marginRight="75pt"
+        android:layout_marginStart="5pt"
+        android:layout_marginEnd="75pt"
         android:alpha="0.9"
         android:src="@drawable/barbie_serfing"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/barbie_background"
         />
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 
@@ -33,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40pt"
-        android:layout_marginRight="10pt"
+        android:layout_marginEnd="10pt"
         android:background="@null"
         android:inputType="phone"
         android:singleLine="true"
@@ -43,7 +44,9 @@
         app:layout_constraintBottom_toTopOf="@+id/resultField"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints=""
+        tools:ignore="LabelFor" />
     <!-- поле результата -->
 
     <TextView
@@ -53,7 +56,7 @@
         android:textColor="#FFBAEB"
         android:textAlignment="textEnd"
         android:singleLine="true"
-        android:layout_marginRight="10pt"
+        android:layout_marginEnd="10pt"
         app:layout_constraintHorizontal_weight="1"
         android:textSize="20pt"
         app:layout_constraintTop_toBottomOf="@+id/numberField"
@@ -61,7 +64,7 @@
         app:layout_constraintRight_toRightOf="parent"
         />
     </GridLayout>
-    <LinearLayout
+    <GridLayout
         android:id="@+id/buttons_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,23 +73,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical"
-        android:background="@drawable/shape">
-        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:rowCount="5"
-            android:columnCount="4">
-<!--        app:layout_constraintTop_toBottomOf="@+id/numberField"-->
+        android:background="@drawable/shape"
+        android:layout_gravity="center"
+        android:rowCount="5"
+        android:columnCount="4">
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
-                android:text="c"
+                android:text="@string/Clear"
                 android:textStyle="bold"
                 android:background="@drawable/button_color"
                 android:textColor="#fc60b6"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:layout_column="0"
                 android:layout_row="0"
                 android:onClick="onClearClick"/>
@@ -96,7 +95,6 @@
                 android:layout_height="35pt"
                 android:background="@drawable/button_color"
                 android:layout_margin="5dp"
-                android:text="/"
                 android:src="@drawable/ic_divide"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
@@ -104,13 +102,14 @@
                 android:layout_column="1"
                 android:layout_row="0"
                 app:tint="#fc60b6"
-                android:onClick="onDivideClick"/>
+                android:onClick="onDivideClick"
+                android:contentDescription="@string/division"/>
             <ImageButton
                 android:id="@+id/multiply"
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
-                android:text="*"
+                android:text="@string/Multiply"
                 android:background="@drawable/button_color"
                 android:src="@drawable/ic_multipy"
                 android:adjustViewBounds="true"
@@ -119,8 +118,10 @@
                 app:tint="#fc60b6"
                 android:layout_column="2"
                 android:layout_row="0"
-                android:onClick="onMultiplyClick"/>
+                android:onClick="onMultiplyClick"
+                android:contentDescription="@string/multiply_description"/>
             <ImageButton
+                android:id="@+id/backspace"
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
@@ -133,6 +134,7 @@
                 android:layout_row="0"
                 app:tint="#fc60b6"
                 android:onClick="onBackspaceClick"
+                android:contentDescription="@string/backspace"
 />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -140,8 +142,8 @@
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
                 android:textColor="#FFFDFF"
-                android:text="7"
-                android:textSize="40dp"
+                android:text="@string/btn_7"
+                android:textSize="40sp"
                 android:layout_column="0"
                 android:layout_row="1"
                 android:background="@drawable/button_color"
@@ -151,8 +153,8 @@
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
                 android:textColor="#FFFDFF"
-                android:textSize="40dp"
-                android:text="8"
+                android:textSize="40sp"
+                android:text="@string/btn_8"
                 android:layout_column="1"
                 android:layout_row="1"
                 android:background="@drawable/button_color"
@@ -162,8 +164,8 @@
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
                 android:textColor="#FFFDFF"
-                android:textSize="40dp"
-                android:text="9"
+                android:textSize="40sp"
+                android:text="@string/btn_9"
                 android:layout_column="2"
                 android:layout_row="1"
                 android:background="@drawable/button_color"
@@ -181,53 +183,49 @@
                 android:layout_column="3"
                 android:layout_row="1"
                 app:tint="#fc60b6"
-                android:onClick="onMinusClick"/>
+                android:onClick="onMinusClick"
+                android:contentDescription="@string/subtraction"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_weight="1"
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
-                android:text="4"
+                android:text="@string/btn_4"
                 android:textColor="#FFFDFF"
                 android:layout_column="0"
                 android:layout_row="2"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:background="@drawable/button_color"
                 android:onClick="onNumberClick"/>
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_weight="1"
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
-                android:text="5"
+                android:text="@string/btn_5"
                 android:textColor="#FFFDFF"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:layout_column="1"
                 android:layout_row="2"
                 android:background="@drawable/button_color"
                 android:onClick="onNumberClick"/>
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_weight="1"
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
-                android:text="6"
+                android:text="@string/btn_6"
                 android:textColor="#FFFDFF"
-                android:textSize="40dp"
+                android:textSize="40sp"
                 android:layout_column="2"
                 android:layout_row="2"
                 android:background="@drawable/button_color"
                 android:onClick="onNumberClick"/>
             <ImageButton
                 android:id="@+id/addition"
-                android:layout_weight="1"
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
                 android:textColor="#ed5c9b"
-                android:textSize="40dp"
-                android:text="+"
+                android:textSize="40sp"
                 android:src="@drawable/ic_plus"
                 android:background="@drawable/button_color"
                 android:adjustViewBounds="true"
@@ -236,93 +234,85 @@
                 android:layout_column="3"
                 android:layout_row="2"
                 app:tint="#fc60b6"
-                android:onClick="onPlusClick"/>
+                android:onClick="onPlusClick"
+                android:contentDescription="@string/addition"/>
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="35pt"
                     android:layout_height="35pt"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/button_color"
                     android:onClick="onNumberClick"
-                    android:text="1"
+                    android:text="@string/btn_1"
                     android:textColor="#FFFDFF"
                     android:layout_column="0"
                     android:layout_row="3"
-                    android:textSize="40dp" />
+                    android:textSize="40sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="35pt"
                     android:layout_height="35pt"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/button_color"
                     android:onClick="onNumberClick"
-                    android:text="2"
+                    android:text="@string/btn_2"
                     android:layout_column="1"
                     android:layout_row="3"
                     android:textColor="#FFFDFF"
-                    android:textSize="40dp" />
+                    android:textSize="40sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="35pt"
                     android:layout_height="35pt"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/button_color"
                     android:onClick="onNumberClick"
-                    android:text="3"
+                    android:text="@string/btn_3"
                     android:layout_column="2"
                     android:layout_row="3"
                     android:textColor="#FFFDFF"
-                    android:textSize="40dp" />
+                    android:textSize="40sp" />
 
                 <ImageButton
                     android:id="@+id/btn_heart"
                     android:layout_width="35pt"
                     android:layout_height="35pt"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:background="@drawable/button_color"
                     android:padding="15dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_heart"
-                    android:text="H"
-                    android:textColor="#ed5c9b"
-                    android:textSize="40dp"
                     android:layout_column="0"
                     android:layout_row="4"
-                    android:onClick="onHeartClick"/>
+                    android:onClick="onHeartClick"
+                    android:contentDescription="@string/heart"/>
             <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="35pt"
                     android:layout_height="35pt"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/button_color"
                     android:onClick="onNumberClick"
-                    android:text="0"
+                    android:text="@string/btn_0"
                     android:layout_column="1"
                     android:layout_row="4"
                     android:textColor="#FFFDFF"
-                    android:textSize="40dp" />
+                    android:textSize="40sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="35pt"
                     android:layout_height="35pt"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:background="@drawable/button_color"
                     android:onClick="onNumberClick"
-                    android:text="."
+                    android:text="@string/Dot"
                     android:textColor="#FFFDFF"
                     android:layout_column="2"
                     android:layout_row="4"
-                    android:textSize="40dp" />
+                    android:textSize="40sp" />
         <ImageButton
             android:layout_width="35pt"
             android:layout_height="74pt"
             android:layout_margin="5dp"
-            android:layout_weight="1"
             android:background="@drawable/button_equal"
             android:onClick="onEqualClick"
             android:src="@drawable/ic_equal"
@@ -333,12 +323,12 @@
             android:layout_column="3"
             android:layout_row="3"
             android:layout_rowSpan="2"
-            app:layout_constraintTop_toBottomOf="@+id/secondButtonPanel" />
-        </GridLayout>
-    </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/secondButtonPanel"
+            android:contentDescription="@string/equal"/>
+    </GridLayout>
     <ImageView
         android:padding="15dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginBottom="15dp"
         android:elevation="10dp"
         android:layout_column="0"
@@ -350,6 +340,7 @@
         android:layout_gravity="center"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:contentDescription="@string/animation_heart"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

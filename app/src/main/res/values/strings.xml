@@ -1,3 +1,38 @@
 <resources>
-    <string name="app_name">Try</string>
+    <string name="app_name">Barbie Calculator</string>
+    <string name="heading">Bella\'s Enchanting Secret</string>
+    <string name="paragraph">In the world of dolls, a special Barbie named Bella lived in a magical dollhouse with her friends. But Bella had a secret - every night, under the glowing moon, she came to life! With sparkling eyes and a wide smile, she ventured beyond her dollhouse, spreading joy wherever she went.\n\n
+
+Her nighttime escapades were her cherished secret, a chance to explore the wonders beyond. Bella loved watching children play during the day but yearned to roam freely.\n\n
+
+One night, while exploring the toy store, she met Twinkle, a mischievous little elf. They became inseparable, dancing under moonlight, singing to the stars, and making memories to treasure.\n\n
+
+Bella learned the true meaning of friendship and discovered a heart filled with love and kindness. One special night, she made a wish on a shooting star, asking to bring joy to children everywhere.\n\n
+
+To her delight, her wish came true! Every morning, Bella woke up with newfound magic. Children who held her felt warmth and comfort, carrying a piece of her enchantment.\n\n
+
+The legend of Bella, the magical Barbie, spread far and wide. Children cherished her as a friend who brought happiness into their lives. Bella\'s secret had become a beautiful reality, making the world a little brighter, all thanks to her heart full of magic and love.</string>
+    <string name="button_back">Back</string>
+    <string name="barbie_background">Barbie background</string>
+    <string name="Clear">c</string>
+    <string name="division">Division</string>
+    <string name="Multiply">*</string>
+    <string name="multiply_description">Multiply</string>
+    <string name="backspace">Backspace</string>
+    <string name="btn_7">7</string>
+    <string name="btn_8">8</string>
+    <string name="btn_9">9</string>
+    <string name="subtraction">Subtraction</string>
+    <string name="btn_4">4</string>
+    <string name="btn_5">5</string>
+    <string name="btn_6">6</string>
+    <string name="addition">Addition</string>
+    <string name="btn_1">1</string>
+    <string name="btn_2">2</string>
+    <string name="btn_3">3</string>
+    <string name="heart">Heart</string>
+    <string name="btn_0">0</string>
+    <string name="Dot">.</string>
+    <string name="animation_heart">Animation heart</string>
+    <string name="equal">Equal</string>
 </resources>

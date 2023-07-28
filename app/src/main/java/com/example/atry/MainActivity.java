@@ -21,15 +21,15 @@ public class MainActivity extends AppCompatActivity {
     TextView resultField; // текстовое поле для вывода результата
     EditText numberField;   // поле для ввода числа
     TextView operationField;    // текстовое поле для вывода знака операции
-    Double operand = null;  // операнд операции
     String lastOperation = "="; // последняя операция
     ArrayList<String> lastOperand = new ArrayList<String>();
-    private ImageButton heartButton;
     private ImageView heartImage;
     public ArrayList<String> expression = new ArrayList<String>();
     int operandCount = 0;
     int operatorCount = 0;
     public String result = "";
+    private ArrayList<String> key = new ArrayList<>();
+    Bundle state = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +38,14 @@ public class MainActivity extends AppCompatActivity {
         // получаем все поля по id из activity_main.xml
         resultField = findViewById(R.id.resultField);
         numberField = findViewById(R.id.numberField);
-        heartButton = findViewById(R.id.btn_heart);
         heartImage = findViewById(R.id.ic_heart);
+        key.add("628");
+        key.add("-");
+        key.add("260");
     }
     // сохранение состояния
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("OPERATION", lastOperation);
-        if(operand!=null)
-            outState.putDouble("OPERAND", operand);
         super.onSaveInstanceState(outState);
     }
     // получение ранее сохраненного состояния
@@ -54,11 +53,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        resultField = findViewById(R.id.resultField);
+        numberField = findViewById(R.id.numberField);
+        heartImage = findViewById(R.id.ic_heart);
         lastOperation = savedInstanceState.getString("OPERATION");
-        operand= savedInstanceState.getDouble("OPERAND");
-        System.out.println(Integer.getInteger(result));
-        System.out.println(Double.valueOf(result));
-        resultField.setText(result);
+        lastOperand = savedInstanceState.getStringArrayList("LAST_OPERAND");
+        resultField.setText(savedInstanceState.getString("RESULT"));
+        numberField.setText(savedInstanceState.getString("NUMBER"));
+        expression = savedInstanceState.getStringArrayList("EXPRESSION");
+        operandCount = savedInstanceState.getInt("OPERAND_COUNT");
+        operatorCount = savedInstanceState.getInt("OPERATOR_COUNT");
+        result = savedInstanceState.getString("RESULT_TEXT");
     }
     // обработка нажатия на числовую кнопку
     public void onNumberClick(View view){
@@ -66,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
         Button button = (Button)view;
         numberField.append(button.getText());
 
-        if(lastOperation.equals("=") && operand!=null){
-            operand = null;
-        }
         lastOperand.add((String) button.getText());
         if (!expression.isEmpty() && isNumber(expression.get(expression.size() - 1))){
             expression.remove(expression.size() - 1);
@@ -116,53 +118,46 @@ public class MainActivity extends AppCompatActivity {
         try {
             double v = Double.parseDouble(str);
             return true;
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException ignored) {
         }
         return false;
     }
     // обработка нажатия на кнопку операции
     public void onPlusClick(View view) {
         lastOperation = "+";
-        if (lastOperand.isEmpty()) {
-            expression.remove(expression.size() - 1);
-        } else if (!isRepeatOperator(lastOperation)) {
+        if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
         }
     }
 
     public void onMinusClick(View view) {
         lastOperation = "-";
-        if (lastOperand.isEmpty()) {
-            expression.remove(expression.size() - 1);
-        } else if (!isRepeatOperator(lastOperation)) {
+        if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
         }
     }
     public void onMultiplyClick(View view) {
         lastOperation = "*";
-        if (lastOperand.isEmpty()) {
-            expression.remove(expression.size() - 1);
-        } else if (!isRepeatOperator(lastOperation)) {
+        if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
         }
     }
     public void onDivideClick(View view) {
         lastOperation = "/";
-        if (lastOperand.isEmpty()) {
-            expression.remove(expression.size() - 1);
-        } else if (!isRepeatOperator(lastOperation)) {
+        if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
         }
     }
     public void onEqualClick(View view) {
         lastOperation = "=";
         evaluateExpression();
-        if (Double.valueOf(result) % 1.0 < 0.000001) {
+        if (Double.parseDouble(result) % 1.0 < 0.000001) {
             result = result.substring(0, result.length() - 2);
         }
         resultField.setText(result);
     }
 
+    @SuppressLint("SetTextI18n")
     private void onOperatorClick() {
         String currentText = numberField.getText().toString();
         numberField.setText(currentText + Operator.getOperatorSymbol(lastOperation));
@@ -176,23 +171,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isRepeatOperator(String lastOperation) {
-        if (!expression.isEmpty() && lastOperation.equals(expression.get(expression.size() - 1))) {
-            return true;
-        }
-        return false;
+        return !expression.isEmpty() && lastOperation.equals(expression.get(expression.size() - 1));
     }
 
     public void onClearClick(View view) {
-        resultField = findViewById(R.id.resultField);
-        numberField = findViewById(R.id.numberField);
-        resultField.setText("");
-        numberField.setText("");
-        operand = null;
-        lastOperation = "=";
-        lastOperand.clear();
-        operandCount = 0;
-        operatorCount = 0;
-        expression.clear();
+        if (isSecret()) {
+            state.putString("RESULT", "");
+            state.putString("NUMBER", "");
+            state.putString("OPERATION", lastOperation);
+            state.putStringArrayList("EXPRESSION", expression);
+            state.putStringArrayList("LAST_OPERAND", lastOperand);
+            state.putInt("OPERAND_COUNT", operandCount);
+            state.putInt("OPERATOR_COUNT", operatorCount);
+            state.putString("RESULT_TEXT", result);
+            onSaveInstanceState(state);
+            setContentView(R.layout.secret_page);
+        }
+            resultField.setText("");
+            numberField.setText("");
+            lastOperation = "=";
+            lastOperand.clear();
+            operandCount = 0;
+            operatorCount = 0;
+            expression.clear();
     }
 
     public void onBackspaceClick(View view) {
@@ -213,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
                 expression.remove(expSize - 1);
                 expression.add(lastElem);
             }
+            String currentText = numberField.getText().toString();
+            numberField.setText(currentText.subSequence(0, currentText.length() - 1));
         }
     }
 
@@ -221,5 +224,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Применение анимации к картинке
         heartImage.startAnimation(anim);
+    }
+
+    private boolean isSecret() {
+        return expression.equals(key);
+    }
+
+    public void onBackClick(View view) {
+        setContentView(R.layout.activity_main);
+        onRestoreInstanceState(state);
     }
 }
