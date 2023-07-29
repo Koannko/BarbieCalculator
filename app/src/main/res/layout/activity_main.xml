@@ -143,12 +143,17 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFDFF"
                 android:text="@string/btn_7"
+                android:foregroundGravity="bottom"
                 android:textSize="40sp"
+                android:foreground = "?selectableItemBackground"
+                android:clickable = "true"
+                android:focusable = "true"
                 android:layout_column="0"
                 android:layout_row="1"
                 android:background="@drawable/button_color"
                 android:onClick="onNumberClick"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_8"
                 android:layout_width="35pt"
                 android:layout_height="35pt"
                 android:layout_margin="5dp"
@@ -157,6 +162,9 @@
                 android:text="@string/btn_8"
                 android:layout_column="1"
                 android:layout_row="1"
+                android:foreground = "?selectableItemBackground"
+                android:clickable = "true"
+                android:focusable = "true"
                 android:background="@drawable/button_color"
                 android:onClick="onNumberClick"/>
             <androidx.appcompat.widget.AppCompatButton
@@ -272,21 +280,22 @@
                     android:textColor="#FFFDFF"
                     android:textSize="40sp" />
 
-                <ImageButton
-                    android:id="@+id/btn_heart"
-                    android:layout_width="35pt"
-                    android:layout_height="35pt"
-                    android:layout_margin="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/button_color"
-                    android:padding="15dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_heart"
-                    android:layout_column="0"
-                    android:layout_row="4"
-                    android:onClick="onHeartClick"
-                    android:contentDescription="@string/heart"/>
-            <androidx.appcompat.widget.AppCompatButton
+        <ImageButton
+            android:id="@+id/btn_heart"
+            android:layout_width="35pt"
+            android:layout_height="35pt"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_margin="5dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button_color"
+            android:contentDescription="@string/heart"
+            android:onClick="onHeartClick"
+            android:padding="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_heart" />
+
+        <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="35pt"
                     android:layout_height="35pt"
                     android:layout_margin="5dp"

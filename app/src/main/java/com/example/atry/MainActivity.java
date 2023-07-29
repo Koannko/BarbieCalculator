@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -65,9 +66,22 @@ public class MainActivity extends AppCompatActivity {
         operatorCount = savedInstanceState.getInt("OPERATOR_COUNT");
         result = savedInstanceState.getString("RESULT_TEXT");
     }
+
+    private void makeRippleEffect(View view) {
+        view.setBackgroundResource(R.drawable.clicked_button);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.setBackgroundResource(R.drawable.button_color);
+            }
+        }, 200);
+    }
+
     // обработка нажатия на числовую кнопку
     public void onNumberClick(View view){
-
+        makeRippleEffect(view);
         Button button = (Button)view;
         numberField.append(button.getText());
 
@@ -124,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // обработка нажатия на кнопку операции
     public void onPlusClick(View view) {
+        makeRippleEffect(view);
         lastOperation = "+";
         if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
@@ -131,30 +146,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onMinusClick(View view) {
+        makeRippleEffect(view);
         lastOperation = "-";
         if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
         }
     }
     public void onMultiplyClick(View view) {
+        makeRippleEffect(view);
         lastOperation = "*";
         if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
         }
     }
     public void onDivideClick(View view) {
+        makeRippleEffect(view);
         lastOperation = "/";
         if (!isRepeatOperator(lastOperation)) {
             onOperatorClick();
         }
     }
     public void onEqualClick(View view) {
-        lastOperation = "=";
-        evaluateExpression();
-        if (Double.parseDouble(result) % 1.0 < 0.000001) {
-            result = result.substring(0, result.length() - 2);
+        view.setBackgroundResource(R.drawable.clicked_equal_button);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.setBackgroundResource(R.drawable.button_equal);
+            }
+        }, 200);
+        if (!expression.isEmpty()) {
+            lastOperation = "=";
+            evaluateExpression();
+            if (Double.parseDouble(result) % 1.0 < 0.000001) {
+                result = result.substring(0, result.length() - 2);
+            }
+            resultField.setText(result);
         }
-        resultField.setText(result);
     }
 
     @SuppressLint("SetTextI18n")
@@ -175,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClearClick(View view) {
+        makeRippleEffect(view);
         if (isSecret()) {
             state.putString("RESULT", "");
             state.putString("NUMBER", "");
@@ -197,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBackspaceClick(View view) {
+        makeRippleEffect(view);
         lastOperation = "=";
         int expSize = expression.size();
         if (expSize != 0) {
@@ -220,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onHeartClick(View view) {
+        makeRippleEffect(view);
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.heart_fly_up);
 
         // Применение анимации к картинке
@@ -231,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBackClick(View view) {
+        makeRippleEffect(view);
         setContentView(R.layout.activity_main);
         onRestoreInstanceState(state);
     }
