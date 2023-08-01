@@ -3,22 +3,32 @@ package com.example.atry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class MainActivity extends AppCompatActivity {
+import android.widget.Toast;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
+    private ImageView msgTV;
     TextView resultField; // текстовое поле для вывода результата
     EditText numberField;   // поле для ввода числа
     TextView operationField;    // текстовое поле для вывода знака операции
@@ -31,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public String result = "";
     private ArrayList<String> key = new ArrayList<>();
     Bundle state = new Bundle();
+    RandomDuckImage imageDuck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,36 @@ public class MainActivity extends AppCompatActivity {
         key.add("628");
         key.add("-");
         key.add("260");
+
+
+        msgTV = findViewById(R.id.main_picture);
+        // on below line we are creating a retrofit
+        // builder and passing our base url
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://random-d.uk/api/images/1.jpg/")
+                // on below line we are calling add Converter
+                // factory as GSON converter factory.
+                .addConverterFactory(GsonConverterFactory.create())
+                // at last we are building our retrofit builder.
+                .build();
+        // below line is to create an instance for our retrofit api call class and initializing it.
+        RetrofitAPICall retrofitAPI = retrofit.create(RetrofitAPICall.class);
+        // on below line creating and initializing call variable for get data method.
+        Call<RandomDuckImage> call = retrofitAPI.getRandomDuckPicture();
+        // on below line adding an enqueue to parse the data from api.
+
+        call.enqueue(new Callback<RandomDuckImage>() {
+            @Override
+            public void onResponse(Call<RandomDuckImage> call, Response<RandomDuckImage> response) {
+                imageDuck = response.body();
+                Log.d(TAG, "onResponse: ------>called<-----");
+                msgTV.setImageDrawable(imageDuck);
+            }
+
+            @Override
+            public void onFailure(Call<RandomDuckImage> call, Throwable t) {
+                Log.d("TAG","onFailure = ------>called<----- "+t.toString());
+            }
+        });
     }
     // сохранение состояния
     @Override
