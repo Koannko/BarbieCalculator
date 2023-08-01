@@ -9,6 +9,7 @@
     >
     <!-- поле знака операции -->
     <ImageView
+        android:id="@+id/main_picture"
         android:layout_width="match_parent"
         android:layout_height="120pt"
         android:layout_marginTop="70dp"
