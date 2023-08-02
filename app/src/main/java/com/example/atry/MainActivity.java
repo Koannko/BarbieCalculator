@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         msgTV = findViewById(R.id.main_picture);
         // on below line we are creating a retrofit
         // builder and passing our base url
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://random-d.uk/api/images/1.jpg/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://random-d.uk/api/v2/")
                 // on below line we are calling add Converter
                 // factory as GSON converter factory.
                 .addConverterFactory(GsonConverterFactory.create())
@@ -75,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RandomDuckImage> call, Response<RandomDuckImage> response) {
                 imageDuck = response.body();
-                Log.d(TAG, "onResponse: ------>called<-----");
-                msgTV.setImageDrawable(imageDuck);
+                Log.d(TAG, new Gson().toJson(response.body()));
+//                msgTV.setImageDrawable(imageDuck);
             }
 
             @Override
