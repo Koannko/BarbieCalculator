@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RandomDuckImage extends Drawable {
+public class RandomDuckImage {
     @SerializedName("url")
     @Expose
     private String url;
@@ -22,26 +22,6 @@ public class RandomDuckImage extends Drawable {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    @Override
-    public void draw(@NonNull Canvas canvas) {
-
-    }
-
-    @Override
-    public void setAlpha(int i) {
-
-    }
-
-    @Override
-    public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
-    }
-
-    @Override
-    public int getOpacity() {
-        return PixelFormat.UNKNOWN;
     }
 
 }

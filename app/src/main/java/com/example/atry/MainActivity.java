@@ -3,6 +3,7 @@ package com.example.atry;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.util.Stack;
 
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -58,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         key.add("-");
         key.add("260");
 
-
         msgTV = findViewById(R.id.main_picture);
+
         // on below line we are creating a retrofit
         // builder and passing our base url
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://random-d.uk/api/v2/")
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<RandomDuckImage> call, Response<RandomDuckImage> response) {
                 imageDuck = response.body();
                 Log.d(TAG, new Gson().toJson(response.body()));
+
 //                msgTV.setImageDrawable(imageDuck);
             }
 
@@ -87,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("TAG","onFailure = ------>called<----- "+t.toString());
             }
         });
+
+        Glide.with(this)
+                .load(new Gson().toJson(imageDuck))
+                .centerCrop()
+                .placeholder(R.drawable.barbie_serfing)
+                .into(msgTV);
     }
     // сохранение состояния
     @Override
